@@ -1,0 +1,185 @@
+<style>
+  #editPopupOverlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #editPopupOverlay .popup-box {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    min-width: 300px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  }
+</style>
+
+<style>
+  .custom-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .custom-scroll::-webkit-scrollbar-thumb {
+    background-color: #3b82f6; /* Màu xanh nổi bật */
+    border-radius: 3px;
+  }
+
+  .custom-scroll::-webkit-scrollbar-track {
+    background: #e5e7eb; /* Tailwind gray-200 */
+  }
+</style>
+
+<div class="w-full px-6 py-6 mx-auto">
+  <!-- card 2 -->
+
+  <div class="flex flex-wrap mt-6 -mx-3">
+    <!-- Bảng danh sách -->
+    <div class="w-full px-3 mt-0 lg:w-1 lg:flex-none">
+      <div
+        class="shadow-xl relative z-20 flex min-w-0 flex-col break-words rounded-2xl bg-white"
+      >
+        <div class="p-6 pb-0 mb-0">
+          <div class="flex items-center justify-between flex-wrap">
+            <h6 class="dark:text-white text-base font-semibold">
+              Danh sách khách mời
+            </h6>
+
+            <div class="flex items-center adminOnly">
+              <label
+                for="tableSelector"
+                class="mr-2 text-sm font-medium text-gray-700 dark:text-white"
+              >
+                Chọn bảng dữ liệu:
+              </label>
+              <select
+                id="tableSelector"
+                class="text-sm rounded-lg border border-gray-300 bg-white px-3 py-1.5 dark:bg-slate-800 dark:text-white dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <!-- Option sẽ được thêm bằng JavaScript -->
+              </select>
+            </div>
+          </div>
+          <div class="flex items-center justify-between flex-wrap">
+            <div class="flex items-center">
+              <a
+                class="inline-block w-full px-8 py-2 text-xs font-bold leading-normal text-center text-white align-middle transition-all ease-in bg-blue-500 border-0 rounded-lg shadow-md select-none bg-150 bg-x-25 hover:shadow-xs hover:-translate-y-px"
+                href="#"
+                onclick="event.preventDefault(); exportToExcel()"
+                >Xuất Excel</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="flex-auto px-0 pt-0 pb-2">
+          <div class="p-0 overflow-x-auto">
+            <table
+              class="items-center w-full mb-0 align-top border-collapse text-slate-500"
+            >
+              <thead class="align-bottom">
+                <tr>
+                  <th class="px-6 py-3 text-center">STT</th>
+                  <th class="px-6 py-3 text-center">
+                    Tên khách mời (Mã khách mời)
+                  </th>
+                  <th class="px-6 py-3 text-center">Nhóm khách mời</th>
+                  <th class="px-6 py-3 text-center">Số bàn</th>
+                  <th class="px-6 py-3 text-center adminOnly"></th>
+                </tr>
+              </thead>
+              <tbody id="rsvpTableBody"></tbody>
+            </table>
+            <div id="pagination" class="mt-4 text-center"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap mt-6 -mx-3">
+    <!-- Toàn bộ danh sách bàn -->
+    <div class="w-full px-3 mt-0">
+      <h6 class="text-lg font-bold mb-4">📋 Danh sách các bàn:</h6>
+
+      <!-- Grid danh sách bàn sẽ đổ vào đây -->
+      <div id="tableCardGrid" class="flex flex-wrap mt-6 -mx-3"></div>
+    </div>
+  </div>
+</div>
+<div
+  id="editPopupOverlay"
+  class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden"
+>
+  <!-- Popup nội dung -->
+  <div
+    class="bg-white rounded-xl shadow-2xl p-6 w-[90%] max-w-md relative"
+    style="width: 80%"
+  >
+    <h2 class="text-xl font-semibold mb-4">📝 Sửa thông tin khách mời</h2>
+
+    <input type="hidden" id="editId" />
+
+    <div class="mb-3">
+      <label class="block text-sm font-medium mb-1">Mã khách mời:</label>
+      <input
+        type="text"
+        id="editMa"
+        class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        readonly
+      />
+    </div>
+    <div class="mb-3">
+      <label class="block text-sm font-medium mb-1">Tên khách mời:</label>
+      <input
+        type="text"
+        id="editName"
+        class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
+    </div>
+    <div class="mb-3">
+      <label class="block text-sm font-medium mb-1"
+        >Số lượng khách tham dự cùng:</label
+      >
+      <input
+        type="text"
+        id="editAttendPerson"
+        class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
+    </div>
+    <div class="mb-3">
+      <label class="block text-sm font-medium mb-1">Nhóm khách mời:</label>
+      <input
+        type="text"
+        id="editGroup"
+        class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="block text-sm font-medium mb-1">Số bàn:</label>
+      <select id="editTable" class="w-full border rounded px-3 py-2">
+        <option value="0">Chưa chọn</option>
+        <option value="1">Bàn 1</option>
+      </select>
+    </div>
+
+    <div class="flex justify-end space-x-2">
+      <button
+        onclick="closePopup()"
+        class="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 text-gray-800"
+      >
+        ❌ Huỷ
+      </button>
+      <button
+        onclick="saveEdit()"
+        class="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-gray-800"
+      >
+        💾 Lưu
+      </button>
+    </div>
+  </div>
+</div>
