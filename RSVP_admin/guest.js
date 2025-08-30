@@ -245,6 +245,47 @@
     XLSX.writeFile(workbook, fileName);
   };
 
+  window.importExcel = async function () {
+    const fileInput = document.getElementById("excelFile");
+    if (!fileInput.files.length) {
+      alert("Hãy chọn file Excel!");
+      return;
+    }
+
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+
+    reader.onload = async function (e) {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, { type: "array" });
+
+      // Lấy sheet đầu tiên
+      const sheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
+
+      // Convert sheet → JSON
+      const jsonData = XLSX.utils.sheet_to_json(worksheet);
+
+      console.log("Excel data:", jsonData);
+
+      // Gửi dữ liệu lên Supabase
+      const { data: inserted, error } = await supabase
+        .from(window.currentTable)
+        .insert(jsonData);
+
+      if (error) {
+        console.error("Import lỗi:", error);
+        alert("Có lỗi khi import!");
+      } else {
+        console.log("Đã import:", inserted);
+        alert("Import thành công!");
+        await loadDataFromTable(window.currentTable);
+      }
+    };
+
+    reader.readAsArrayBuffer(file);
+  };
+
   window.editUser = function (ma) {
     const user = allThemes.find((u) => u.ma === ma);
     if (!user) return alert("Không tìm thấy user");
