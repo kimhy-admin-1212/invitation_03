@@ -69,7 +69,9 @@
       const tr = document.createElement("tr");
       tr.innerHTML = `
       <td class="p-2 text-center">${index + 1}</td>
-      <td class="p-2 text-left">${item.name}</td>
+      <td class="p-2 text-left">
+      ${item.name} ${item.note ? `(${item.note})` : ""}
+      </td>
       <td class="p-2 text-center" style="font-weight: bold; color: ${
         item.confirmation == "1" ? "green" : "red"
       }">
