@@ -4115,6 +4115,7 @@
                         <input
                           autocomplete="off"
                           tabindex="1"
+                          id="tenInput1"
                           name="name"
                           required=""
                           class="ladi-form-control"
@@ -4440,7 +4441,6 @@
                         <input
                           autocomplete="off"
                           tabindex="6"
-                          name="name"
                           required=""
                           class="ladi-form-control"
                           type="text"
@@ -4476,6 +4476,7 @@
                         <textarea
                           autocomplete="off"
                           tabindex="8"
+                          id="noteInput"
                           name="form_item7"
                           class="ladi-form-control"
                           placeholder="Bạn là gì của dâu rể"
@@ -4537,14 +4538,14 @@
     <div id="backdrop-popup" class="backdrop-popup"></div>
     <div id="backdrop-dropbox" class="backdrop-dropbox"></div>
     <div id="lightbox-screen" class="lightbox-screen"></div>
-    <script>
+    <!-- <script>
       window.addEventListener("DOMContentLoaded", () => {
         const form = document.querySelector("form.ladi-form");
         if (form) {
           form.reset();
         }
       });
-    </script>
+    </script> -->
     <script id="script_lazyload" type="text/javascript">
       window.lazyload_run = function (dom, is_first, check_dom_rect) {
         if (
@@ -4997,11 +4998,11 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-    <script
+    <!-- <script
       type="text/javascript"
       defer=""
       src="https://kimhyassets.vercel.app/check_access/check_access.js"
-    ></script>
+    ></script> -->
 
     <script src="/giangthao/asset/config.js"></script>
     <script>
@@ -5077,14 +5078,27 @@
           }
 
           // ✅ Hiển thị tên khách
-          tenInput.textContent = data.ten;
+
+          setTimeout(() => {
+            const tenInput1 = document.getElementById("tenInput1");
+            if (tenInput) tenInput.textContent = data.ten;
+            if (tenInput1) {
+              if ((data.ma = "guest")) tenInput1.value = "";
+              else tenInput1.value = data.ten || "";
+              console.log("Input đã gán:", tenInput1.value);
+            } else {
+              console.warn("Không tìm thấy input #tenInput1");
+            }
+          }, 1000);
         } catch (error) {
           console.error("Lỗi khi lấy dữ liệu:", error);
           window.location.href = `404.html`;
         }
       }
 
-      hienThiTen();
+      window.addEventListener("DOMContentLoaded", () => {
+        hienThiTen();
+      });
     </script>
   </body>
   <savior-host
