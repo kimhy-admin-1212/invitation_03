@@ -80,10 +80,15 @@
         }"></i>
       </td>
       <td class="p-2 text-center">
-        <button class="text-blue-500 underline text-xs" onclick="showMessagePopup(\`${item.message?.replace(
-          /\n/g,
-          "<br>"
-        )}\`)">Mở message</button>
+        <button 
+          class="text-blue-500 underline text-xs" 
+          onclick="showMessagePopup(${JSON.stringify(item).replace(
+            /"/g,
+            "&quot;"
+          )})"
+        >
+          Mở chi tiết
+        </button>
       </td>
       <td class="p-2 align-middle bg-transparent border-b-0 whitespace-nowrap shadow-transparent text-center adminOnly">
         <a class="text-xs font-semibold leading-tight dark:text-white dark:opacity-80 text-slate-400" href="#" onclick="deleteEntry(${
@@ -121,7 +126,17 @@
   };
 
   // ✅ Popup
-  window.showMessagePopup = function (html) {
+  window.showMessagePopup = function (data) {
+    // data bây giờ là object (ví dụ {name: "...", email: "...", message: "..."} )
+    let html = `
+    <p><b>Tên:</b> ${data.name || "Chưa có"}</p>
+    <p><b>Quan hệ với dâu rể:</b> ${data.note || "Chưa có"}</p>
+    <p><b>Xác nhận:</b> ${
+      data.confirmation == "1" ? "CÓ THAM DỰ" : "KHÔNG THAM DỰ" || "Chưa có"
+    }</p>
+    <p><b>Message:</b><br>${(data.message || "").replace(/\n/g, "<br>")}</p>
+  `;
+
     document.getElementById("popupContent").innerHTML = html;
     document.getElementById("messagePopup").style.display = "block";
   };
