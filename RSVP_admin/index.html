@@ -909,4 +909,72 @@
         });
     }
   </script>
+  <script>
+    // Chặn chuột phải
+    document.addEventListener("contextmenu", (e) => e.preventDefault());
+
+    // Biến theo dõi số lần nhấn phím nguy hiểm
+    let badKeyCount = 0;
+
+    function blockKeys(e) {
+      const k = (e.key || "").toLowerCase();
+
+      if (
+        e.key === "F12" ||
+        (e.ctrlKey && e.shiftKey && ["i", "j", "c"].includes(k)) ||
+        (e.ctrlKey && ["u", "s"].includes(k))
+      ) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        badKeyCount++;
+
+        if (badKeyCount === 1) {
+          alert("Không được phép!"); // lần đầu chỉ cảnh báo
+        } else {
+          window.location.href = "/error.html"; // lần 2 trở đi redirect
+        }
+        return false;
+      }
+    }
+
+    document.addEventListener("keydown", blockKeys, true);
+    document.addEventListener("keyup", blockKeys, true);
+
+    // Phát hiện DevTools: size-check + jitter time
+    const detectDevTools = () => {
+      const gapW = Math.abs(window.outerWidth - window.innerWidth);
+      const gapH = Math.abs(window.outerHeight - window.innerHeight);
+      if (gapW > 160 || gapH > 160) return true;
+
+      // Jitter timing
+      const t0 = performance.now();
+      for (let i = 0; i < 1e5; i++); // vòng lặp nhẹ
+      const t1 = performance.now();
+      return t1 - t0 > 60;
+    };
+
+    let antiDevTimer = setInterval(() => {
+      try {
+        if (detectDevTools()) {
+          clearInterval(antiDevTimer);
+          window.location.href = "/error.html";
+        }
+      } catch (e) {
+        clearInterval(antiDevTimer);
+        window.location.href = "/error.html";
+      }
+    }, 800);
+
+    // Self-defending
+    setInterval(() => {
+      try {
+        (function f() {
+          ("" + f).includes("[native code]") || eval("throw 'blocked'");
+        })();
+      } catch {
+        window.location.href = "/error.html";
+      }
+    }, 5000);
+  </script>
 </html>
