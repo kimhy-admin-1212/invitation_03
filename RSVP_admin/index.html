@@ -945,13 +945,13 @@
     const detectDevTools = () => {
       const gapW = Math.abs(window.outerWidth - window.innerWidth);
       const gapH = Math.abs(window.outerHeight - window.innerHeight);
-      if (gapW > 160 || gapH > 160) return true;
+      if (gapW > 300 || gapH > 300) return true;
 
       // Jitter timing
       const t0 = performance.now();
       for (let i = 0; i < 1e5; i++); // vòng lặp nhẹ
       const t1 = performance.now();
-      return t1 - t0 > 60;
+      return t1 - t0 > 200;
     };
 
     let antiDevTimer = setInterval(() => {
@@ -969,9 +969,13 @@
     // Self-defending
     setInterval(() => {
       try {
-        (function f() {
-          ("" + f).includes("[native code]") || eval("throw 'blocked'");
-        })();
+        // Chỉ check nếu có console mở
+        if (
+          window.console &&
+          console.log.toString().indexOf("[native code]") === -1
+        ) {
+          throw "blocked";
+        }
       } catch {
         window.location.href = "/error.html";
       }
