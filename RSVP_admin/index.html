@@ -930,7 +930,7 @@
         badKeyCount++;
 
         if (badKeyCount === 1) {
-          alert("Không được phép!"); // lần đầu chỉ cảnh báo
+          window.location.href = "/error.html"; // lần đầu chỉ cảnh báo
         } else {
           window.location.href = "/error.html"; // lần 2 trở đi redirect
         }
