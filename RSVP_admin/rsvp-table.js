@@ -130,7 +130,7 @@
     // data bây giờ là object (ví dụ {name: "...", email: "...", message: "..."} )
     let html = `
     <p><b>Tên:</b> ${data.name || "Chưa có"}</p>
-    <p><b>Quan hệ với dâu rể:</b> ${data.note || "Chưa có"}</p>
+    <p><b>Note:</b> ${data.note || "Chưa có"}</p>
     <p><b>Xác nhận:</b> ${
       data.confirmation == "1" ? "CÓ THAM DỰ" : "KHÔNG THAM DỰ" || "Chưa có"
     }</p>
