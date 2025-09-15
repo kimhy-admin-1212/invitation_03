@@ -7486,7 +7486,27 @@
         -webkit-animation-duration: 3s;
       }
     </style>
+    <script>
+      function __phamngocsonmedia() {
+        phamngocsonmediasound__();
+      }
+      const phamngocsonmedia_List = [
+        "/minhkhoi/lib/music.mp3", // i do
+      ];
+      //Random music
+      let index = Math.floor(Math.random() * phamngocsonmedia_List.length);
+      const audio = new Audio(phamngocsonmedia_List[index]);
 
+      function phamngocsonmediasound__() {
+        audio.play();
+      }
+      document.addEventListener("click", phamngocsonmediasound__);
+      audio.addEventListener("ended", function () {
+        index = (index + 1) % phamngocsonmedia_List.length;
+        audio.src = phamngocsonmedia_List[index];
+        audio.play();
+      });
+    </script>
     <script>
       !(function (e, t) {
         var a = t.createElement("script");
