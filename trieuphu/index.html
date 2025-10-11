@@ -2626,7 +2626,7 @@
     }
 
     #SECTION3 {
-      height: 1400.207px;
+      height: 1200.207px;
     }
 
     #HEADLINE90 {
@@ -2943,7 +2943,7 @@
     }
 
     #IMAGE13 {
-      top: 1220.87px;
+      top: 1020.87px;
       left: 0px;
     }
 
@@ -3258,6 +3258,75 @@
       }
     }
   </style>
+  <style>
+    .popup-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      /* = top:0; right:0; bottom:0; left:0 */
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 9999;
+    }
+
+    /* Dùng absolute + transform để căn giữa thật */
+    .popup-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      /* căn giữa tuyệt đối */
+      background: transparent;
+      border-radius: 12px;
+      max-width: 90%;
+      max-height: 90%;
+      animation: fadeIn 0.3s ease;
+      text-align: center;
+    }
+
+    /* Ảnh trong popup */
+    .popup-content img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* Nút đóng */
+    .close-btn {
+      position: absolute;
+      top: -12px;
+      right: -12px;
+      font-size: 28px;
+      color: white;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      line-height: 36px;
+      text-align: center;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .close-btn:hover {
+      background: rgba(255, 255, 255, 0.9);
+      color: black;
+    }
+
+    /* Hiệu ứng xuất hiện */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  </style>
 </head>
 
 <body class="" cz-shortcut-listen="true">
@@ -3492,7 +3561,7 @@
           <div class="ladi-group">
             <div id="HEADLINE109" class="ladi-element ladi-animation-hidden">
               <p class="ladi-headline ladi-transition">
-                Đón khách - Chụp ảnh <br />Cắt bánh - thổi nến <br />Dùng tiệc <br />Ký tên<br />
+                Đón khách - Chụp ảnh <br />Thổi nến - Cắt bánh <br />Dùng tiệc <br />Ký tên<br />
               </p>
             </div>
             <div id="BOX11" class="ladi-element">
@@ -3653,9 +3722,16 @@
         <div id="HEADLINE1021" class="ladi-element ladi-animation-hidden">
           <p class="ladi-headline">Hộp mừng sinh nhật<br /></p>
         </div>
-        <div id="IMAGE131" class="ladi-element">
+        <!-- <div id="IMAGE131" class="ladi-element">
           <div class="ladi-image">
             <div class="ladi-image-background"></div>
+          </div>
+        </div> -->
+        <div id="popup-image" class="popup-overlay">
+          <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <img src="/trieuphu/lib/z7098529950732_61b1e0aa5146645ece68e044c446347d.jpg" alt="Hộp mừng sinh nhật"
+              style="width: 50%; text-align: center;" />
           </div>
         </div>
         <div id="IMAGE13" class="ladi-element">
@@ -4031,7 +4107,7 @@
     setCountdownFromString("01/11/2025 17:30:00");
   </script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.6/dist/umd/supabase.min.js"></script>
-  <script type="text/javascript" defer="" src="https://kimhyassets.vercel.app/check_access/check_access.js"></script>
+  <!-- <script type="text/javascript" defer="" src="https://kimhyassets.vercel.app/check_access/check_access.js"></script> -->
   <script src="/trieuphu/lib/config.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -4071,6 +4147,26 @@
 
       document.getElementById("BUTTON2").addEventListener("click", () => {
         form.requestSubmit();
+      });
+    });
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const headline = document.getElementById("HEADLINE1021");
+      const popup = document.getElementById("popup-image");
+      const closeBtn = popup.querySelector(".close-btn");
+
+      headline.addEventListener("click", () => {
+        popup.style.display = "flex"; // Hiện popup
+      });
+
+      closeBtn.addEventListener("click", () => {
+        popup.style.display = "none"; // Ẩn popup khi bấm X
+      });
+
+      // Ẩn popup khi click ra ngoài
+      popup.addEventListener("click", (e) => {
+        if (e.target === popup) popup.style.display = "none";
       });
     });
   </script>
