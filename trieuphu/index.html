@@ -3258,75 +3258,6 @@
       }
     }
   </style>
-  <style>
-    .popup-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      /* = top:0; right:0; bottom:0; left:0 */
-      background: rgba(0, 0, 0, 0.7);
-      z-index: 9999;
-    }
-
-    /* Dùng absolute + transform để căn giữa thật */
-    .popup-content {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      /* căn giữa tuyệt đối */
-      background: transparent;
-      border-radius: 12px;
-      max-width: 90%;
-      max-height: 90%;
-      animation: fadeIn 0.3s ease;
-      text-align: center;
-    }
-
-    /* Ảnh trong popup */
-    .popup-content img {
-      width: 100%;
-      height: auto;
-      border-radius: 12px;
-      display: block;
-      margin: 0 auto;
-    }
-
-    /* Nút đóng */
-    .close-btn {
-      position: absolute;
-      top: -12px;
-      right: -12px;
-      font-size: 28px;
-      color: white;
-      background: rgba(0, 0, 0, 0.6);
-      border-radius: 50%;
-      width: 36px;
-      height: 36px;
-      line-height: 36px;
-      text-align: center;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .close-btn:hover {
-      background: rgba(255, 255, 255, 0.9);
-      color: black;
-    }
-
-    /* Hiệu ứng xuất hiện */
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: scale(0.95);
-      }
-
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-  </style>
 </head>
 
 <body class="" cz-shortcut-listen="true">
@@ -3727,12 +3658,45 @@
             <div class="ladi-image-background"></div>
           </div>
         </div> -->
-        <div id="popup-image" class="popup-overlay">
-          <div class="popup-content">
-            <span class="close-btn">&times;</span>
-            <img src="/trieuphu/lib/z7098529950732_61b1e0aa5146645ece68e044c446347d.jpg" alt="Hộp mừng sinh nhật"
-              style="width: 50%; text-align: center;" />
+        <div id="imagePopup" onclick="closeImagePopup()" style="
+    display: none;
+    position: fixed;
+    inset: 0; /* top:0;right:0;bottom:0;left:0 */
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  ">
+          <!-- Nút đóng -->
+          <div onclick="closeImagePopup(); event.stopPropagation();" style="
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 32px;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      background: rgba(0, 0, 0, 0.6);
+      width: 40px;
+      height: 40px;
+      line-height: 38px;
+      text-align: center;
+      border-radius: 50%;
+      z-index: 1001;
+      transition: background 0.2s;
+    " onmouseover="this.style.background='rgba(255,255,255,0.8)';this.style.color='black';"
+            onmouseout="this.style.background='rgba(0,0,0,0.6)';this.style.color='white';">
+            ✕
           </div>
+
+          <!-- Hình ảnh -->
+          <img id="popupImg" src="" style="
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #fff;
+      display: block;
+    " />
         </div>
         <div id="IMAGE13" class="ladi-element">
           <div class="ladi-image">
@@ -4151,24 +4115,32 @@
     });
   </script>
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    // Hàm mở popup
+    function openImagePopup(src) {
+      const popup = document.getElementById("imagePopup");
+      const img = document.getElementById("popupImg");
+      img.src = src;
+      popup.style.display = "flex";
+    }
+
+    // Hàm đóng popup
+    function closeImagePopup() {
+      const popup = document.getElementById("imagePopup");
+      popup.style.display = "none";
+    }
+
+    // Khi DOM đã sẵn sàng
+    window.onload = function () {
+      // Gắn sự kiện click vào HEADLINE1021 để mở popup
       const headline = document.getElementById("HEADLINE1021");
-      const popup = document.getElementById("popup-image");
-      const closeBtn = popup.querySelector(".close-btn");
-
-      headline.addEventListener("click", () => {
-        popup.style.display = "flex"; // Hiện popup
-      });
-
-      closeBtn.addEventListener("click", () => {
-        popup.style.display = "none"; // Ẩn popup khi bấm X
-      });
-
-      // Ẩn popup khi click ra ngoài
-      popup.addEventListener("click", (e) => {
-        if (e.target === popup) popup.style.display = "none";
-      });
-    });
+      if (headline) {
+        headline.style.cursor = "pointer";
+        headline.addEventListener("click", function (e) {
+          e.stopPropagation();
+          openImagePopup("/trieuphu/lib/z7098529950732_61b1e0aa5146645ece68e044c446347d.jpg");
+        });
+      }
+    };
   </script>
 </body>
 <savior-host style="
