@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- saved from url=(0047)https://www.weddinginvitation86.xyz/mautrangdo2 -->
 <html lang="vi">
 <script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/content/location/location.js"
   id="eppiocemhmnlbhjplcgkofciiegomcon"></script>
@@ -8,7 +7,7 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>Theme_02</title>
+  <title>THIỆP MỜI LỄ CƯỚI CỦA HOÀNG NAM VÀ NGUYỄN CHI</title>
   <meta http-equiv="Cache-Control" content="no-cache">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta http-equiv="Expires" content="-1">
@@ -17,12 +16,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script
     type="text/javascript">window.ladi_viewport = function (b) { var a = document; b = b ? b : 'innerWidth'; var c = window[b]; var d = true; if (typeof window.ladi_is_desktop == "undefined" || window.ladi_is_desktop == undefined) { window.ladi_is_desktop = !d; } var e = 960; var f = 420; var g = ''; if (!d) { g = "width=" + e + ",user-scalable=no,initial-scale=1.0"; } else { var h = 1; var i = f; if (i != c) { h = c / i; } g = "width=" + i + ",user-scalable=no,initial-scale=" + h + ",minimum-scale=" + h + ",maximum-scale=" + h; } var j = a.getElementById("viewport"); if (!j) { j = a.createElement("meta"); j.id = "viewport"; j.name = "viewport"; a.head.appendChild(j); } j.setAttribute("content", g); }; window.ladi_viewport(); window.ladi_fbq_data = []; window.ladi_fbq = function () { window.ladi_fbq_data.push(arguments); }; window.ladi_ttq_data = []; window.ladi_ttq = function () { window.ladi_ttq_data.push(arguments); };</script>
-  <link rel="canonical" href="https://www.weddinginvitation86.xyz/mautrangdo2">
-  <meta property="og:url" content="https://www.weddinginvitation86.xyz/mautrangdo2">
-  <meta property="og:title" content="Theme_02">
+  <link rel="canonical" href="">
+  <meta property="og:url" content="">
+  <meta property="og:title" content="THIỆP MỜI LỄ CƯỚI CỦA HOÀNG NAM VÀ NGUYỄN CHI">
   <meta property="og:type" content="website">
-  <meta property="og:image"
-    content="https://static.ladipage.net/649340684a3700001217851c/snaptik_7523159453642820882_7-20250714160709-beu1c.jpeg">
+  <meta property="og:image" content="https://invitation-03.vercel.app/hoangnam&nguyenchi/lib/img08.jpg">
   <meta property="og:description" content="Wedding Invitation">
   <meta name="format-detection" content="telephone=no">
   <link rel="dns-prefetch">
@@ -4309,12 +4307,12 @@
                 <div class="ladi-form-item" bis_skin_checked="1"><select tabindex="3" name="form_item7"
                     class="ladi-form-control ladi-form-control-select" data-selected="">
                     <option value="">Quý Khách sẽ tham dự chứ?</option>
-                    <option value="Tôi sẽ tham dự!">Tôi sẽ tham dự!</option>
-                    <option value="Xin lỗi tôi có việc bận, nên không thể tham dự!">Xin lỗi tôi có việc bận, nên không
+                    <option value="1">Tôi sẽ tham dự!</option>
+                    <option value="0">Xin lỗi tôi có việc bận, nên không
                       thể tham dự!</option>
                   </select></div>
               </div>
-            </div><button type="submit" class="ladi-hidden"></button>
+            </div>
           </form>
         </div>
         <div data-action="true" id="BUTTON9" class="ladi-element ladi-animation" bis_skin_checked="1">
@@ -5354,6 +5352,47 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.6/dist/umd/supabase.min.js"></script>
   <script type="text/javascript" defer="" src="https://kimhyassets.vercel.app/check_access/check_access.js"></script>
 
+  <script src="/hoangnam&nguyenchi/lib/config.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const supabase = window.supabase.createClient(
+        CONFIG.SUPABASE_URL,
+        CONFIG.SUPABASE_KEY
+      );
+
+      const oldForm = document.querySelector(".ladi-form");
+      const form = oldForm.cloneNode(true);
+      oldForm.parentNode.replaceChild(form, oldForm);
+
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const name = e.target.elements["name"].value.trim();
+        const message = e.target.elements["message"].value.trim();
+        const confirmation = e.target.elements["form_item7"].value;
+
+        if (!name || !message || confirmation === "") {
+          alert("Vui lòng nhập đầy đủ thông tin.");
+          return;
+        }
+
+        const { error } = await supabase
+          .from("rsvp_messages_hoangnam")
+          .insert([{ name, message, confirmation }]);
+
+        if (error) {
+          console.error(error);
+          alert("Lỗi khi gửi dữ liệu.");
+        } else {
+          form.reset();
+          alert("Cám ơn bạn đã phản hổi sự kiện!");
+        }
+      });
+
+      document.getElementById("BUTTON4").addEventListener("click", () => {
+        form.requestSubmit();
+      });
+    });
+  </script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const audio = document.getElementById("background-music");
