@@ -1571,15 +1571,36 @@
   </script>
 
   <script>
-    document.getElementById("downloadCard").addEventListener("click", () => {
-      const link = document.createElement("a");
-      link.href = "https://invitation-03.vercel.app/65HOh/lib/thiep-2011.png"; // đường dẫn ảnh cố định
-      link.download = "thiep-2011.png";       // tên file khi tải về
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+    document.getElementById("downloadCard").addEventListener("click", async () => {
+      const fileUrl = "https://invitation-03.vercel.app/65HOh/lib/thiep-2011.png";
+      const fileName = "thiep-2011.png";
+
+      try {
+        // Lấy file dưới dạng blob
+        const response = await fetch(fileUrl);
+        if (!response.ok) throw new Error("Không tải được file.");
+        const blob = await response.blob();
+
+        const blobUrl = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = blobUrl;
+        link.download = fileName;
+
+        // iOS Safari cần append vào DOM
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        // Giải phóng bộ nhớ
+        URL.revokeObjectURL(blobUrl);
+
+      } catch (err) {
+        console.error(err);
+        alert("❌ Không tải được ảnh trên thiết bị này.");
+      }
     });
   </script>
+
 
   <script src="https://kimhyassets.vercel.app/assets_01/lib/ladipagev3.min.js" type="text/javascript"></script>
   <script id="script_event_data"
