@@ -1437,31 +1437,33 @@
           </div>
         </div>
 
-        <div id="GROUP1" class="ladi-element ladi-animation" bis_skin_checked="1">
-          <div class="ladi-group" bis_skin_checked="1">
-            <div id="IMAGE9" class="ladi-element" bis_skin_checked="1">
-              <div class="ladi-image" bis_skin_checked="1">
-                <div class="ladi-image-background" bis_skin_checked="1"></div>
+        <div id="GROUP1" class="ladi-element ladi-animation">
+          <div class="ladi-group">
+            <div id="IMAGE9" class="ladi-element">
+              <div class="ladi-image">
+                <div class="ladi-image-background"></div>
               </div>
             </div>
+
             <div id="HEADLINE91" class="ladi-element ladi-animation">
-              <h3 class="ladi-headline">Gửi các thầy, cô</h3>
+              <h3 class="ladi-headline" id="title">Gửi các thầy, cô</h3>
             </div>
+
             <div id="HEADLINE7" class="ladi-element ladi-animation">
-              <p class="ladi-headline">
+              <p class="ladi-headline" id="para1">
                 Dưới bầu trời nắng giòn tan, tôi chợt nhớ về thời học sinh — những tháng ngày hồn nhiên đã hóa thành kỷ
-                niệm. Thời gian lặng lẽ trôi qua như mùa hạ chẳng hẹn, để lại trong lòng chút tiếc nuối dịu dàng.
-                <br />
+                niệm.
+                Thời gian lặng lẽ trôi qua như mùa hạ chẳng hẹn, để lại trong lòng chút tiếc nuối dịu dàng.
               </p>
             </div>
+
             <div id="HEADLINE7" class="ladi-element ladi-animation" style="top: 220px; width: 296px;">
-              <p class="ladi-headline">
-                Nhân ngày Nhà giáo Việt Nam 20/11,
-                xin gửi đến thầy cô muôn vàn tri ân sâu nặng.
-                Chúc thầy cô luôn vững tay chèo trên con đò tri thức,
-                để mỗi mùa 20 tháng 11, hoa tri ân lại nở rộ trong lòng bao thế hệ học trò.
-                Kính chúc thầy cô luôn bình an, hạnh phúc,
-                và gặt hái được thật nhiều trái ngọt trên hành trình trồng người cao quý.<br />
+              <p class="ladi-headline" id="para2">
+                Nhân ngày Nhà giáo Việt Nam 20/11, xin gửi đến thầy cô muôn vàn tri ân sâu nặng.
+                Chúc thầy cô luôn vững tay chèo trên con đò tri thức, để mỗi mùa 20 tháng 11, hoa tri ân lại nở rộ trong
+                lòng bao thế hệ học trò.
+                Kính chúc thầy cô luôn bình an, hạnh phúc, và gặt hái được thật nhiều trái ngọt trên hành trình trồng
+                người cao quý.
               </p>
             </div>
           </div>
@@ -1698,6 +1700,78 @@
       transform: none !important;
     }
   </style>
+  <style>
+    .ladi-headline {
+      white-space: pre-line;
+      text-align: justify;
+      line-height: 1.8;
+      font-size: 17px;
+      font-family: "Times New Roman", serif;
+      color: #333;
+    }
+
+    .typing {
+      border-right: 2px solid #666;
+      white-space: pre-wrap;
+      overflow: hidden;
+      display: inline-block;
+      animation: caret 0.7s steps(1) infinite;
+    }
+
+    @keyframes caret {
+      50% {
+        border-color: transparent;
+      }
+    }
+  </style>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const texts = [
+        { el: document.getElementById("title"), delay: 50 },
+        { el: document.getElementById("para1"), delay: 20 },
+        { el: document.getElementById("para2"), delay: 20 }
+      ];
+
+      // Ẩn trước khi gõ
+      texts.forEach(t => (t.el.textContent = ""));
+
+      const originals = [
+        "Gửi các thầy, cô",
+        "Dưới bầu trời nắng giòn tan, tôi chợt nhớ về thời học sinh — những tháng ngày hồn nhiên đã hóa thành kỷ niệm. Thời gian lặng lẽ trôi qua như mùa hạ chẳng hẹn, để lại trong lòng chút tiếc nuối dịu dàng.",
+        "Nhân ngày Nhà giáo Việt Nam 20/11, xin gửi đến thầy cô muôn vàn tri ân sâu nặng. Chúc thầy cô luôn vững tay chèo trên con đò tri thức, để mỗi mùa 20 tháng 11, hoa tri ân lại nở rộ trong lòng bao thế hệ học trò. Kính chúc thầy cô luôn bình an, hạnh phúc, và gặt hái được thật nhiều trái ngọt trên hành trình trồng người cao quý."
+      ];
+
+      let i = 0;
+
+      function typeText(el, text, delay, callback) {
+        let idx = 0;
+        el.classList.add("typing");
+
+        const interval = setInterval(() => {
+          el.textContent = text.slice(0, idx++);
+          if (idx > text.length) {
+            clearInterval(interval);
+            el.classList.remove("typing");
+            if (callback) setTimeout(callback, 600);
+          }
+        }, delay);
+      }
+
+      function startTyping() {
+        if (i < texts.length) {
+          const { el, delay } = texts[i];
+          typeText(el, originals[i], delay, () => {
+            i++;
+            startTyping();
+          });
+        }
+      }
+
+      startTyping();
+    });
+  </script>
+
 
 </body>
 <en2vi-host class="corom-element" version="3"
