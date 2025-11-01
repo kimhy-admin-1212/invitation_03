@@ -1481,6 +1481,16 @@
 
       </div>
     </div>
+    <!-- Nút tải ảnh mới -->
+    <button id="downloadCard" style="position: fixed; bottom: 50px; right: 20px; z-index: 9999;
+         background: linear-gradient(90deg, #E95BA8, #FFB67F);
+         color: white; border: none; padding: 12px 20px;
+         border-radius: 30px; font-weight: bold;
+         box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+         font-size: 14px;
+         opacity: 0; pointer-events: none; transition: opacity 0.6s ease;">
+      📸
+    </button>
   </div>
   <div id="backdrop-popup" class="backdrop-popup" bis_skin_checked="1"></div>
   <div id="backdrop-dropbox" class="backdrop-dropbox" bis_skin_checked="1"></div>
@@ -1552,31 +1562,22 @@
   </style>
   <script src="https://cdn.jsdelivr.net/npm/dom-to-image-more@3.3.0/dist/dom-to-image-more.min.js"></script>
   <script>
-    window.addEventListener("DOMContentLoaded", function () {
-      const name = localStorage.getItem("thiep_name");
-      const message = localStorage.getItem("thiep_message");
-
-      if (name && message) {
-        // Cập nhật phần tên người nhận
-        const nameElement = document.querySelector("#HEADLINE91 .ladi-headline");
-        if (nameElement) {
-          nameElement.textContent = "Gửi " + name;
-        }
-
-        // Cập nhật phần lời chúc
-        const messageElement = document.querySelector("#HEADLINE7 .ladi-headline");
-        if (messageElement) {
-          messageElement.textContent = message;
-        }
-      }
-    });
-  </script>
-  <script>
     // Khi trang (bao gồm ảnh, font, CSS...) load xong
     window.addEventListener('load', () => {
       const btn = document.getElementById("downloadCard");
       btn.style.opacity = "1";
       btn.style.pointerEvents = "auto";
+    });
+  </script>
+
+  <script>
+    document.getElementById("downloadCard").addEventListener("click", () => {
+      const link = document.createElement("a");
+      link.href = "https://invitation-03.vercel.app/65HOh/lib/thiep-2011.png"; // đường dẫn ảnh cố định
+      link.download = "thiep-2011.png";       // tên file khi tải về
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     });
   </script>
 
