@@ -14943,62 +14943,27 @@
       <div class="section-wrapper full-width full-height p-relative" bis_skin_checked="1">
         <div class="section-background p-absolute full-width full-height lazy" bis_skin_checked="1"></div>
         <div class="section-container full-height p-relative" bis_skin_checked="1">
-          <div id="w-xzeze8cs" class="com-countdown p-absolute is-animation" bis_skin_checked="1">
-            <div class="countdown-wrapper full-width full-height" data-mode="timer" bis_skin_checked="1">
-              <div class="countdown-item countdown-item-day" style="" bis_skin_checked="1">
-                <div class="timer-number-wrapper" bis_skin_checked="1">
-                  <div class="timer-number first" bis_skin_checked="1">
-                    <div class="show" bis_skin_checked="1"></div>
-                    <div class="next" bis_skin_checked="1"></div>
-                  </div>
-                  <div class="timer-number last" bis_skin_checked="1">
-                    <div class="show" bis_skin_checked="1"></div>
-                    <div class="next" bis_skin_checked="1"></div>
-                  </div>
-                </div>
-                <div class="text" style="" bis_skin_checked="1">Ngày</div>
+          <div id="w-xzeze8cs" class="com-countdown p-absolute is-animation">
+            <div class="countdown-wrapper" data-mode="timer">
+              <div class="countdown-item">
+                <span id="count-days" class="count-num">0</span>
+                <span class="count-label">Ngày</span>
               </div>
-              <div class="countdown-item countdown-item-hour" style="" bis_skin_checked="1">
-                <div class="timer-number-wrapper" bis_skin_checked="1">
-                  <div class="timer-number first" bis_skin_checked="1">
-                    <div class="show" bis_skin_checked="1"></div>
-                    <div class="next" bis_skin_checked="1"></div>
-                  </div>
-                  <div class="timer-number last" bis_skin_checked="1">
-                    <div class="show" bis_skin_checked="1"></div>
-                    <div class="next" bis_skin_checked="1"></div>
-                  </div>
-                </div>
-                <div class="text" style="" bis_skin_checked="1">Giờ</div>
+              <div class="countdown-item">
+                <span id="count-hours" class="count-num">00</span>
+                <span class="count-label">Giờ</span>
               </div>
-              <div class="countdown-item countdown-item-minute" bis_skin_checked="1">
-                <div class="timer-number-wrapper" bis_skin_checked="1">
-                  <div class="timer-number first" bis_skin_checked="1">
-                    <div class="show" bis_skin_checked="1"></div>
-                    <div class="next" bis_skin_checked="1"></div>
-                  </div>
-                  <div class="timer-number last" bis_skin_checked="1">
-                    <div class="show" bis_skin_checked="1"></div>
-                    <div class="next" bis_skin_checked="1"></div>
-                  </div>
-                </div>
-                <div class="text" style="" bis_skin_checked="1">Phút</div>
+              <div class="countdown-item">
+                <span id="count-minutes" class="count-num">00</span>
+                <span class="count-label">Phút</span>
               </div>
-              <div class="countdown-item countdown-item-second" style="" bis_skin_checked="1">
-                <div class="timer-number-wrapper" bis_skin_checked="1">
-                  <div class="timer-number first" bis_skin_checked="1">
-                    <div class="show" bis_skin_checked="1"></div>
-                    <div class="next" bis_skin_checked="1"></div>
-                  </div>
-                  <div class="timer-number last" bis_skin_checked="1">
-                    <div class="show" bis_skin_checked="1"></div>
-                    <div class="next" bis_skin_checked="1"></div>
-                  </div>
-                </div>
-                <div class="text" style="" bis_skin_checked="1">Giây</div>
+              <div class="countdown-item">
+                <span id="count-seconds" class="count-num">00</span>
+                <span class="count-label">Giây</span>
               </div>
             </div>
           </div>
+
           <div id="w-jpvy3acb" class="com-text-block p-absolute is-animation" bis_skin_checked="1">
             <div class="text-block" bis_skin_checked="1">
               <h4 class="text-block-css full-width">Đếm ngược thời gian<br></h4>
@@ -15519,12 +15484,38 @@
     });
   </script>
 
+  <style>
+    #w-xzeze8cs .countdown-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      font-size: 20px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    #w-xzeze8cs .countdown-item {
+      text-align: center;
+    }
+
+    #w-xzeze8cs .count-num {
+      display: block;
+      font-size: 28px;
+      line-height: 1.2;
+    }
+
+    #w-xzeze8cs .count-label {
+      font-size: 14px;
+      color: #777;
+    }
+  </style>
+
   <script>
-    function setCountdownFromString(dateStr) {
-      const [day, month, yearAndTime] = dateStr.split("/");
+    function startCountdown(targetDateStr) {
+      const [day, month, yearAndTime] = targetDateStr.split("/");
       const [year, time] = yearAndTime.split(" ");
       const [hour, minute, second = 0] = time.split(":");
-
       const targetDate = new Date(
         parseInt(year),
         parseInt(month) - 1,
@@ -15534,42 +15525,26 @@
         parseInt(second)
       );
 
-      waitForCountdown(targetDate);
-    }
+      const daysEl = document.getElementById("count-days");
+      const hoursEl = document.getElementById("count-hours");
+      const minutesEl = document.getElementById("count-minutes");
+      const secondsEl = document.getElementById("count-seconds");
 
-    function waitForCountdown(targetDate, tries = 0) {
-      const wrapper = document.getElementById("w-xzeze8cs");
-      if (!wrapper) {
-        if (tries < 40) return setTimeout(() => waitForCountdown(targetDate, tries + 1), 500);
-        console.warn("⚠ Countdown chưa xuất hiện sau 20s.");
+      if (!daysEl || !hoursEl || !minutesEl || !secondsEl) {
+        console.error("Countdown elements not found!");
         return;
       }
 
-      const dayEl = wrapper.querySelector(".countdown-item-day");
-      const hourEl = wrapper.querySelector(".countdown-item-hour");
-      const minuteEl = wrapper.querySelector(".countdown-item-minute");
-      const secondEl = wrapper.querySelector(".countdown-item-second");
-
-      if (!dayEl || !hourEl || !minuteEl || !secondEl) {
-        if (tries < 40) return setTimeout(() => waitForCountdown(targetDate, tries + 1), 500);
-        console.warn("⚠ Countdown chưa có cấu trúc đầy đủ.");
-        return;
-      }
-
-      startCountdown(targetDate, dayEl, hourEl, minuteEl, secondEl);
-    }
-
-    function startCountdown(targetDate, dayEl, hourEl, minuteEl, secondEl) {
       function updateCountdown() {
         const now = new Date().getTime();
-        const distance = targetDate.getTime() - now;
+        const distance = targetDate - now;
 
         if (distance <= 0) {
           clearInterval(timer);
-          dayEl.textContent = "0 Ngày";
-          hourEl.textContent = "00 Giờ";
-          minuteEl.textContent = "00 Phút";
-          secondEl.textContent = "00 Giây";
+          daysEl.textContent = "0";
+          hoursEl.textContent = "00";
+          minutesEl.textContent = "00";
+          secondsEl.textContent = "00";
           return;
         }
 
@@ -15578,21 +15553,22 @@
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        dayEl.textContent = days + " Ngày";
-        hourEl.textContent = String(hours).padStart(2, "0") + " Giờ";
-        minuteEl.textContent = String(minutes).padStart(2, "0") + " Phút";
-        secondEl.textContent = String(seconds).padStart(2, "0") + " Giây";
+        daysEl.textContent = days;
+        hoursEl.textContent = String(hours).padStart(2, "0");
+        minutesEl.textContent = String(minutes).padStart(2, "0");
+        secondsEl.textContent = String(seconds).padStart(2, "0");
       }
 
       updateCountdown();
       const timer = setInterval(updateCountdown, 1000);
     }
 
-    // 🔥 Đợi tới khi tất cả script (Webcake) load xong
     window.addEventListener("load", () => {
-      setCountdownFromString("30/11/2025 10:00:00");
+      startCountdown("30/11/2025 10:00:00");
     });
   </script>
+
+
 
 
 
