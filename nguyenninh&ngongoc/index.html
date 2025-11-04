@@ -15511,7 +15511,52 @@
     }
   </style>
 
+  <style>
+    /* 🔹 Đảm bảo section countdown hiển thị ngay lập tức */
+    #w-p49lhovc {
+      opacity: 1 !important;
+      visibility: visible !important;
+      display: block !important;
+    }
+
+    #w-p49lhovc .countdown-wrapper {
+      display: flex !important;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      font-size: 20px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    #w-p49lhovc .countdown-item {
+      text-align: center;
+    }
+
+    #w-p49lhovc .count-num {
+      display: block !important;
+      font-size: 28px;
+      line-height: 1.2;
+    }
+
+    #w-p49lhovc .count-label {
+      font-size: 14px;
+      color: #777;
+    }
+  </style>
+
   <script>
+    // 🔹 Đợi cho section cha (#w-p49lhovc) thực sự xuất hiện rồi mới chạy countdown
+    function startCountdownWhenReady() {
+      const section = document.getElementById("w-p49lhovc");
+      if (!section || !section.querySelector("#count-days")) {
+        setTimeout(startCountdownWhenReady, 500);
+        return;
+      }
+
+      startCountdown("30/11/2025 10:00:00");
+    }
+
     function startCountdown(targetDateStr) {
       const [day, month, yearAndTime] = targetDateStr.split("/");
       const [year, time] = yearAndTime.split(" ");
@@ -15529,11 +15574,6 @@
       const hoursEl = document.getElementById("count-hours");
       const minutesEl = document.getElementById("count-minutes");
       const secondsEl = document.getElementById("count-seconds");
-
-      if (!daysEl || !hoursEl || !minutesEl || !secondsEl) {
-        console.error("Countdown elements not found!");
-        return;
-      }
 
       function updateCountdown() {
         const now = new Date().getTime();
@@ -15563,15 +15603,9 @@
       const timer = setInterval(updateCountdown, 1000);
     }
 
-    window.addEventListener("load", () => {
-      startCountdown("30/11/2025 10:00:00");
-    });
+    // 🔥 Đợi toàn bộ trang và Webcake load xong
+    window.addEventListener("load", startCountdownWhenReady);
   </script>
-
-
-
-
-
 
   <!-- Supabase SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.6/dist/umd/supabase.min.js"></script>
