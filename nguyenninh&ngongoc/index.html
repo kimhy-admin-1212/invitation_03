@@ -15520,7 +15520,6 @@
   </script>
 
   <script>
-    // Hàm khởi tạo từ chuỗi thời gian "dd/mm/yyyy hh:mm:ss"
     function setCountdownFromString(dateStr) {
       const [day, month, yearAndTime] = dateStr.split("/");
       const [year, time] = yearAndTime.split(" ");
@@ -15535,23 +15534,29 @@
         parseInt(second)
       );
 
-      startCountdown(targetDate);
+      waitForCountdown(targetDate);
     }
 
-    // Hàm đếm ngược
-    function startCountdown(targetDate) {
+    // 🔹 Chờ đến khi countdown xuất hiện mới chạy
+    function waitForCountdown(targetDate, tries = 0) {
       const dayEl = document.querySelector(".countdown-item-day .show");
       const hourEl = document.querySelector(".countdown-item-hour .show");
       const minuteEl = document.querySelector(".countdown-item-minute .show");
       const secondEl = document.querySelector(".countdown-item-second .show");
 
-      // ✅ Kiểm tra DOM có tồn tại không
       if (!dayEl || !hourEl || !minuteEl || !secondEl) {
-        console.warn("⏳ Countdown elements chưa sẵn sàng. Thử lại sau 500ms...");
-        setTimeout(() => startCountdown(targetDate), 500);
+        if (tries < 20) { // thử lại tối đa 10s
+          setTimeout(() => waitForCountdown(targetDate, tries + 1), 500);
+        } else {
+          console.warn("⏳ Countdown không tìm thấy trong DOM sau khi load.");
+        }
         return;
       }
 
+      startCountdown(targetDate, dayEl, hourEl, minuteEl, secondEl);
+    }
+
+    function startCountdown(targetDate, dayEl, hourEl, minuteEl, secondEl) {
       function updateCountdown() {
         const now = new Date().getTime();
         const distance = targetDate.getTime() - now;
@@ -15580,11 +15585,11 @@
       const timer = setInterval(updateCountdown, 1000);
     }
 
-    // 👉 Gọi hàm với thời điểm bạn muốn
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", () => {
       setCountdownFromString("30/11/2025 10:00:00");
     });
   </script>
+
 
   <!-- Supabase SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.6/dist/umd/supabase.min.js"></script>
