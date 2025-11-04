@@ -4489,7 +4489,7 @@
     }
 
     #w-1nhk6lbc {
-      top: 407.5px;
+      top: 255.5px;
       left: 14.5px;
       width: 391px;
       height: 120.00000762939453px;
@@ -4753,7 +4753,7 @@
     }
 
     #w-gkycdfvu {
-      top: 527.5000076293945px;
+      top: 400.5000076293945px;
       left: 124.5px;
       width: 171px;
       height: 34px;
@@ -10524,7 +10524,7 @@
     }
 
     #w-1nhk6lbc {
-      top: 407.5px;
+      top: 255.5px;
       left: 14.5px;
       width: 391px;
       height: 120.00000762939453px;
@@ -10788,7 +10788,7 @@
     }
 
     #w-gkycdfvu {
-      top: 527.5000076293945px;
+      top: 400.5000076293945px;
       left: 124.5px;
       width: 171px;
       height: 34px;
@@ -14943,97 +14943,37 @@
       <div class="section-wrapper full-width full-height p-relative" bis_skin_checked="1">
         <div class="section-background p-absolute full-width full-height lazy" bis_skin_checked="1"></div>
         <div class="section-container full-height p-relative" bis_skin_checked="1">
-          <div id="w-xzeze8cs" class="com-countdown p-absolute is-animation">
-            <div class="countdown-wrapper" data-mode="timer">
-              <div class="countdown-item">
-                <span id="count-days" class="count-num">0</span>
+          <div id="wedding-countdown" class="countdown-container">
+            <h3 class="countdown-title">Đếm ngược đến ngày trọng đại 💍</h3>
+            <div class="countdown-grid">
+              <div class="countdown-box">
+                <span id="cd-days" class="count-number">0</span>
                 <span class="count-label">Ngày</span>
               </div>
-              <div class="countdown-item">
-                <span id="count-hours" class="count-num">00</span>
+              <div class="countdown-box">
+                <span id="cd-hours" class="count-number">00</span>
                 <span class="count-label">Giờ</span>
               </div>
-              <div class="countdown-item">
-                <span id="count-minutes" class="count-num">00</span>
+              <div class="countdown-box">
+                <span id="cd-minutes" class="count-number">00</span>
                 <span class="count-label">Phút</span>
               </div>
-              <div class="countdown-item">
-                <span id="count-seconds" class="count-num">00</span>
+              <div class="countdown-box">
+                <span id="cd-seconds" class="count-number">00</span>
                 <span class="count-label">Giây</span>
               </div>
             </div>
           </div>
 
-          <div id="w-jpvy3acb" class="com-text-block p-absolute is-animation" bis_skin_checked="1">
-            <div class="text-block" bis_skin_checked="1">
-              <h4 class="text-block-css full-width">Đếm ngược thời gian<br></h4>
-            </div>
-          </div>
+
+
           <div id="w-1nhk6lbc" class="com-text-block p-absolute is-animation" bis_skin_checked="1">
             <div class="text-block" bis_skin_checked="1">
               <h4 class="text-block-css full-width">Một ngày để nhớ trọn đời,<br>Chúng mình chung bước, gọi mời yêu
                 thương.<br>Cảm ơn vì đã đến cùng,<br>Chung vui hạnh phúc – kết vòng phu thê.<br></h4>
             </div>
           </div>
-          <div id="w-a4ja96ku" class="com-html-box p-absolute" bis_skin_checked="1">
-            <div class="frame-html-box full-width full-height" bis_skin_checked="1">
-              <!-- Hình động 4 chấm pastel nude -->
-              <div class="dot-loader" bis_skin_checked="1">
-                <span style="background-color: #f5e3dc;"></span> <!-- Nude hồng nhạt -->
-                <span style="background-color: #f3d7c2;"></span> <!-- Nude cam be -->
-                <span style="background-color: #e7d5ca;"></span> <!-- Nude be lạnh -->
-                <span style="background-color: #f9e7d3;"></span> <!-- Nude vàng nhạt -->
-              </div>
 
-              <style>
-                .dot-loader {
-                  display: flex;
-                  justify-content: center;
-                  align-items: flex-end;
-                  height: 30px;
-                  gap: 8px;
-                }
-
-                .dot-loader span {
-                  width: 8px;
-                  height: 8px;
-                  border-radius: 50%;
-                  animation: bounce 2s infinite ease-in-out;
-                  /* ← chỉnh từ 1.2s thành 2s */
-                }
-
-
-                .dot-loader span:nth-child(1) {
-                  animation-delay: 0s;
-                }
-
-                .dot-loader span:nth-child(2) {
-                  animation-delay: 0.2s;
-                }
-
-                .dot-loader span:nth-child(3) {
-                  animation-delay: 0.4s;
-                }
-
-                .dot-loader span:nth-child(4) {
-                  animation-delay: 0.6s;
-                }
-
-                @keyframes bounce {
-
-                  0%,
-                  80%,
-                  100% {
-                    transform: translateY(0);
-                  }
-
-                  40% {
-                    transform: translateY(-8px);
-                  }
-                }
-              </style>
-            </div>
-          </div>
           <div id="w-ks6s9a8y" class="com-text-block p-absolute is-animation" bis_skin_checked="1">
             <div class="text-block" bis_skin_checked="1">
               <p class="text-block-css full-width">Gửi mừng cưới<br></p>
@@ -15485,79 +15425,59 @@
   </script>
 
   <style>
-    #w-xzeze8cs .countdown-wrapper {
+    .countdown-container {
+      text-align: center;
+      padding: 40px 20px;
+      background: #fff9f7;
+      border-radius: 16px;
+      max-width: 400px;
+      margin: 40px auto;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .countdown-title {
+      font-size: 22px;
+      font-weight: 600;
+      color: #c47c63;
+      margin-bottom: 20px;
+    }
+
+    .countdown-grid {
       display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 16px;
-      font-size: 20px;
-      font-weight: 600;
-      color: #333;
+      justify-content: space-between;
+      gap: 12px;
     }
 
-    #w-xzeze8cs .countdown-item {
-      text-align: center;
+    .countdown-box {
+      flex: 1;
+      background: #fff;
+      border-radius: 10px;
+      padding: 10px 0;
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.05);
     }
 
-    #w-xzeze8cs .count-num {
+    .count-number {
       display: block;
-      font-size: 28px;
-      line-height: 1.2;
-    }
-
-    #w-xzeze8cs .count-label {
-      font-size: 14px;
-      color: #777;
-    }
-  </style>
-
-  <style>
-    /* 🔹 Đảm bảo section countdown hiển thị ngay lập tức */
-    #w-xzeze8cs {
-      opacity: 1 !important;
-      visibility: visible !important;
-      display: block !important;
-    }
-
-    #w-xzeze8cs .countdown-wrapper {
-      display: flex !important;
-      justify-content: center;
-      align-items: center;
-      gap: 16px;
-      font-size: 20px;
-      font-weight: 600;
+      font-size: 36px;
+      font-weight: bold;
       color: #333;
-    }
-
-    #w-xzeze8cs .countdown-item {
-      text-align: center;
-    }
-
-    #w-xzeze8cs .count-num {
-      display: block !important;
-      font-size: 28px;
       line-height: 1.2;
     }
 
-    #w-xzeze8cs .count-label {
+    .count-label {
       font-size: 14px;
       color: #777;
+    }
+
+    @media (max-width: 480px) {
+      .count-number {
+        font-size: 28px;
+      }
     }
   </style>
 
   <script>
-    // 🔹 Đợi cho section cha (#w-p49lhovc) thực sự xuất hiện rồi mới chạy countdown
-    function startCountdownWhenReady() {
-      const section = document.getElementById("w-xzeze8cs");
-      if (!section || !section.querySelector("#count-days")) {
-        setTimeout(startCountdownWhenReady, 500);
-        return;
-      }
-
-      startCountdown("30/11/2025 10:00:00");
-    }
-
-    function startCountdown(targetDateStr) {
+    function initCountdown(targetDateStr) {
       const [day, month, yearAndTime] = targetDateStr.split("/");
       const [year, time] = yearAndTime.split(" ");
       const [hour, minute, second = 0] = time.split(":");
@@ -15570,14 +15490,14 @@
         parseInt(second)
       );
 
-      const daysEl = document.getElementById("count-days");
-      const hoursEl = document.getElementById("count-hours");
-      const minutesEl = document.getElementById("count-minutes");
-      const secondsEl = document.getElementById("count-seconds");
+      const daysEl = document.getElementById("cd-days");
+      const hoursEl = document.getElementById("cd-hours");
+      const minutesEl = document.getElementById("cd-minutes");
+      const secondsEl = document.getElementById("cd-seconds");
 
       function updateCountdown() {
         const now = new Date().getTime();
-        const distance = targetDate - now;
+        const distance = targetDate.getTime() - now;
 
         if (distance <= 0) {
           clearInterval(timer);
@@ -15603,9 +15523,12 @@
       const timer = setInterval(updateCountdown, 1000);
     }
 
-    // 🔥 Đợi toàn bộ trang và Webcake load xong
-    window.addEventListener("load", startCountdownWhenReady);
+    // Chạy sau khi trang load hoàn toàn
+    window.addEventListener("load", () => {
+      initCountdown("30/11/2025 10:00:00");
+    });
   </script>
+
 
   <!-- Supabase SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.6/dist/umd/supabase.min.js"></script>
