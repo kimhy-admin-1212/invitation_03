@@ -15519,12 +15519,32 @@
     });
   </script>
 
+  <style>
+    /* ✅ Ghi đè CSS để chắc chắn các số được hiển thị */
+    .countdown-wrapper {
+      display: flex !important;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+      color: #000;
+      pointer-events: none;
+      /* vẫn giữ nếu bạn không cần click */
+    }
+
+    .countdown-item .show {
+      display: inline-block !important;
+      min-width: 24px;
+      text-align: center;
+    }
+  </style>
+
   <script>
+    // ✅ Hàm xử lý đếm ngược (với cơ chế chờ Webcake render)
     function setCountdownFromString(dateStr) {
       const [day, month, yearAndTime] = dateStr.split("/");
       const [year, time] = yearAndTime.split(" ");
       const [hour, minute, second = 0] = time.split(":");
-
       const targetDate = new Date(
         parseInt(year),
         parseInt(month) - 1,
@@ -15533,22 +15553,21 @@
         parseInt(minute),
         parseInt(second)
       );
-
       waitForCountdown(targetDate);
     }
 
-    // 🔹 Chờ đến khi countdown DOM render xong (đặc biệt trên Webcake)
     function waitForCountdown(targetDate, tries = 0) {
       const dayEl = document.querySelector(".countdown-item-day .show");
       const hourEl = document.querySelector(".countdown-item-hour .show");
       const minuteEl = document.querySelector(".countdown-item-minute .show");
       const secondEl = document.querySelector(".countdown-item-second .show");
 
+      // Nếu countdown chưa xuất hiện, thử lại
       if (!dayEl || !hourEl || !minuteEl || !secondEl) {
-        if (tries < 30) {
+        if (tries < 40) { // chờ tối đa 20s
           setTimeout(() => waitForCountdown(targetDate, tries + 1), 500);
         } else {
-          console.warn("⚠ Countdown chưa load sau 15s, bỏ qua.");
+          console.warn("⚠ Countdown chưa load sau 20s — bỏ qua.");
         }
         return;
       }
@@ -15585,11 +15604,14 @@
       const timer = setInterval(updateCountdown, 1000);
     }
 
-    // ⏳ Đảm bảo chạy sau toàn bộ script (kể cả webcake)
-    window.addEventListener("load", () => {
-      setCountdownFromString("30/11/2025 10:00:00");
+    // ✅ Chạy sau khi toàn bộ script (kể cả Webcake.js) hoàn tất
+    document.addEventListener("readystatechange", () => {
+      if (document.readyState === "complete") {
+        setCountdownFromString("30/11/2025 10:00:00");
+      }
     });
   </script>
+
 
 
 
