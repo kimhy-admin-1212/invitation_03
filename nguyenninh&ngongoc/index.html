@@ -15537,7 +15537,7 @@
       waitForCountdown(targetDate);
     }
 
-    // 🔹 Chờ đến khi countdown xuất hiện mới chạy
+    // 🔹 Chờ đến khi countdown DOM render xong (đặc biệt trên Webcake)
     function waitForCountdown(targetDate, tries = 0) {
       const dayEl = document.querySelector(".countdown-item-day .show");
       const hourEl = document.querySelector(".countdown-item-hour .show");
@@ -15545,10 +15545,10 @@
       const secondEl = document.querySelector(".countdown-item-second .show");
 
       if (!dayEl || !hourEl || !minuteEl || !secondEl) {
-        if (tries < 20) { // thử lại tối đa 10s
+        if (tries < 30) {
           setTimeout(() => waitForCountdown(targetDate, tries + 1), 500);
         } else {
-          console.warn("⏳ Countdown không tìm thấy trong DOM sau khi load.");
+          console.warn("⚠ Countdown chưa load sau 15s, bỏ qua.");
         }
         return;
       }
@@ -15585,10 +15585,12 @@
       const timer = setInterval(updateCountdown, 1000);
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
+    // ⏳ Đảm bảo chạy sau toàn bộ script (kể cả webcake)
+    window.addEventListener("load", () => {
       setCountdownFromString("30/11/2025 10:00:00");
     });
   </script>
+
 
 
   <!-- Supabase SDK -->
