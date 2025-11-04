@@ -15526,7 +15526,6 @@
       const [year, time] = yearAndTime.split(" ");
       const [hour, minute, second = 0] = time.split(":");
 
-      // Tạo đối tượng thời gian
       const targetDate = new Date(
         parseInt(year),
         parseInt(month) - 1,
@@ -15546,6 +15545,13 @@
       const minuteEl = document.querySelector(".countdown-item-minute .show");
       const secondEl = document.querySelector(".countdown-item-second .show");
 
+      // ✅ Kiểm tra DOM có tồn tại không
+      if (!dayEl || !hourEl || !minuteEl || !secondEl) {
+        console.warn("⏳ Countdown elements chưa sẵn sàng. Thử lại sau 500ms...");
+        setTimeout(() => startCountdown(targetDate), 500);
+        return;
+      }
+
       function updateCountdown() {
         const now = new Date().getTime();
         const distance = targetDate.getTime() - now;
@@ -15553,9 +15559,9 @@
         if (distance <= 0) {
           clearInterval(timer);
           dayEl.textContent = "0";
-          hourEl.textContent = "0";
-          minuteEl.textContent = "0";
-          secondEl.textContent = "0";
+          hourEl.textContent = "00";
+          minuteEl.textContent = "00";
+          secondEl.textContent = "00";
           return;
         }
 
@@ -15570,12 +15576,14 @@
         secondEl.textContent = String(seconds).padStart(2, "0");
       }
 
-      updateCountdown(); // chạy lần đầu ngay
+      updateCountdown();
       const timer = setInterval(updateCountdown, 1000);
     }
 
-    // 👉 Gọi hàm với thời điểm bạn muốn (ví dụ: ngày cưới)
-    setCountdownFromString("30/11/2025 10:00:00");
+    // 👉 Gọi hàm với thời điểm bạn muốn
+    document.addEventListener("DOMContentLoaded", function () {
+      setCountdownFromString("30/11/2025 10:00:00");
+    });
   </script>
 
   <!-- Supabase SDK -->
