@@ -15519,32 +15519,12 @@
     });
   </script>
 
-  <style>
-    /* ✅ Ghi đè CSS để chắc chắn các số được hiển thị */
-    .countdown-wrapper {
-      display: flex !important;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      font-size: 20px;
-      color: #000;
-      pointer-events: none;
-      /* vẫn giữ nếu bạn không cần click */
-    }
-
-    .countdown-item .show {
-      display: inline-block !important;
-      min-width: 24px;
-      text-align: center;
-    }
-  </style>
-
   <script>
-    // ✅ Hàm xử lý đếm ngược (với cơ chế chờ Webcake render)
     function setCountdownFromString(dateStr) {
       const [day, month, yearAndTime] = dateStr.split("/");
       const [year, time] = yearAndTime.split(" ");
       const [hour, minute, second = 0] = time.split(":");
+
       const targetDate = new Date(
         parseInt(year),
         parseInt(month) - 1,
@@ -15553,22 +15533,26 @@
         parseInt(minute),
         parseInt(second)
       );
+
       waitForCountdown(targetDate);
     }
 
     function waitForCountdown(targetDate, tries = 0) {
-      const dayEl = document.querySelector(".countdown-item-day .show");
-      const hourEl = document.querySelector(".countdown-item-hour .show");
-      const minuteEl = document.querySelector(".countdown-item-minute .show");
-      const secondEl = document.querySelector(".countdown-item-second .show");
+      const wrapper = document.getElementById("w-xzeze8cs");
+      if (!wrapper) {
+        if (tries < 40) return setTimeout(() => waitForCountdown(targetDate, tries + 1), 500);
+        console.warn("⚠ Countdown chưa xuất hiện sau 20s.");
+        return;
+      }
 
-      // Nếu countdown chưa xuất hiện, thử lại
+      const dayEl = wrapper.querySelector(".countdown-item-day");
+      const hourEl = wrapper.querySelector(".countdown-item-hour");
+      const minuteEl = wrapper.querySelector(".countdown-item-minute");
+      const secondEl = wrapper.querySelector(".countdown-item-second");
+
       if (!dayEl || !hourEl || !minuteEl || !secondEl) {
-        if (tries < 40) { // chờ tối đa 20s
-          setTimeout(() => waitForCountdown(targetDate, tries + 1), 500);
-        } else {
-          console.warn("⚠ Countdown chưa load sau 20s — bỏ qua.");
-        }
+        if (tries < 40) return setTimeout(() => waitForCountdown(targetDate, tries + 1), 500);
+        console.warn("⚠ Countdown chưa có cấu trúc đầy đủ.");
         return;
       }
 
@@ -15582,10 +15566,10 @@
 
         if (distance <= 0) {
           clearInterval(timer);
-          dayEl.textContent = "0";
-          hourEl.textContent = "00";
-          minuteEl.textContent = "00";
-          secondEl.textContent = "00";
+          dayEl.textContent = "0 Ngày";
+          hourEl.textContent = "00 Giờ";
+          minuteEl.textContent = "00 Phút";
+          secondEl.textContent = "00 Giây";
           return;
         }
 
@@ -15594,21 +15578,19 @@
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        dayEl.textContent = days;
-        hourEl.textContent = String(hours).padStart(2, "0");
-        minuteEl.textContent = String(minutes).padStart(2, "0");
-        secondEl.textContent = String(seconds).padStart(2, "0");
+        dayEl.textContent = days + " Ngày";
+        hourEl.textContent = String(hours).padStart(2, "0") + " Giờ";
+        minuteEl.textContent = String(minutes).padStart(2, "0") + " Phút";
+        secondEl.textContent = String(seconds).padStart(2, "0") + " Giây";
       }
 
       updateCountdown();
       const timer = setInterval(updateCountdown, 1000);
     }
 
-    // ✅ Chạy sau khi toàn bộ script (kể cả Webcake.js) hoàn tất
-    document.addEventListener("readystatechange", () => {
-      if (document.readyState === "complete") {
-        setCountdownFromString("30/11/2025 10:00:00");
-      }
+    // 🔥 Đợi tới khi tất cả script (Webcake) load xong
+    window.addEventListener("load", () => {
+      setCountdownFromString("30/11/2025 10:00:00");
     });
   </script>
 
