@@ -6104,7 +6104,7 @@
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  <!-- <script type="text/javascript" defer="" src="https://kimhyassets.vercel.app/check_access/check_access.js"></script> -->
+  <script type="text/javascript" defer="" src="https://kimhyassets.vercel.app/check_access/check_access.js"></script>
   <script src="/phuonguyen/lib/config.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -6152,6 +6152,7 @@
   </script>
 
   <script>
+    // --- Giải mã Base64 URL-safe có hỗ trợ Unicode ---
     function base64UrlDecode(str) {
       try {
         let b64 = str.replace(/-/g, "+").replace(/_/g, "/");
@@ -6165,51 +6166,54 @@
       }
     }
 
+    // --- Chuẩn hoá Base64 URL-safe ---
     function normalizeBase64(str) {
       let s = str.replace(/-/g, "+").replace(/_/g, "/");
       while (s.length % 4) s += "=";
       return s;
     }
 
+    // --- Danh sách mã khách (URL-safe) ---
     const allowedGuests = [
-      "QsOgIGPhu5E=", // Bà cố
-      "w5RuZyBiw6Agbmdv4bqhaQ==", // Ông bà ngoại
-      "R8SRIGTDrCB0cmluaA==", // Gđ dì trinh
-      "Q+G6rXUgaMawbmcgJiBjw7QgdnkgYW5o", // Cậu hưng & cô vy anh
-      "R8SRIG5nb+G6oWkgdMaw", // Gđ ngoại tư
-      "R8SRIG5nb+G6oWkgMw==", // Gđ ngoại 3
-      "R8SRIG5nb+G6oWkgNg==", // Gđ ngoại 6
-      "R8SRIG5nb+G6oWkgNw==", // Gđ ngoại 7
+      "QsOgIGPhu5E", // Bà cố
+      "w5RuZyBiw6Agbmdv4bqhaQ", // Ông bà ngoại
+      "R8SRIGTDrCB0cmluaA", // Gđ dì trinh
+      "Q-G6rXUgaMawbmcgJiBjw7QgdnkgYW5o", // Cậu hưng & cô vy anh
+      "R8SRIG5nb-G6oWkgdMaw", // Gđ ngoại tư
+      "R8SRIG5nb-G6oWkgMw", // Gđ ngoại 3
+      "R8SRIG5nb-G6oWkgNg", // Gđ ngoại 6
+      "R8SRIG5nb-G6oWkgNw", // Gđ ngoại 7
       "R8SRIGTDrCBxdeG7s25o", // Gđ dì quỳnh
-      "Q+G6rXUgcXXDom4gJiBjw7QgcGjGsMahbmc=", // Cậu quân & cô phương
-      "R8SRIGPhuq11IHTDrW4=", // Gđ cậu tín
-      "w5RuZyBiw6AgdMOhbQ==", // Ông bà tám
-      "R8SRIGLDoWMgcGhvbmc=", // Gđ bác phong
-      "R8SRIGLDoWMgdHJhbmc=", // Gđ bác trang
+      "Q-G6rXUgcXXDom4gJiBjw7QgcGjGsMahbmc", // Cậu quân & cô phương
+      "R8SRIGPhuq11IHTDrW4", // Gđ cậu tín
+      "w5RuZyBiw6AgdMOhbQ", // Ông bà tám
+      "R8SRIGLDoWMgcGhvbmc", // Gđ bác phong
+      "R8SRIGLDoWMgdHJhbmc", // Gđ bác trang
       "R8SRIGNow7ogaGnhur91", // Gđ chú hiếu
-      "R8SRIGNow7ogaG/DoG4=", // Gđ chú hoàn
+      "R8SRIGNow7ogaG_DoG4", // Gđ chú hoàn
       "RW0gdsOibiAr", // Em vân +
-      "RMOsIHBo4bulbmcgKw==", // Dì phụng +
-      "R8SRIGTDrCBuaOG6q24=", // Gđ dì nhẫn
-      "Q8O0IDMgVGjGsMahbmc=", // Cô 3 Thương
-      "R8SRIGPDtCBuaQ==", // Gđ cô ni
-      "Q8O0IDMgw6FuaA==", // Cô 3 ánh
-      "R8SRIGLDoWMgZHVuZw==", // Gđ bác dung
+      "RMOsIHBo4bulbmcgKw", // Dì phụng +
+      "R8SRIGTDrCBuaOG6q24", // Gđ dì nhẫn
+      "Q8O0IDMgVGjGsMahbmc", // Cô 3 Thương
+      "R8SRIGPDtCBuaQ", // Gđ cô ni
+      "Q8O0IDMgw6FuaA", // Cô 3 ánh
+      "R8SRIGLDoWMgZHVuZw", // Gđ bác dung
       "R8SRIGPDtCBsaW5o", // Gđ cô linh
       "QsOgIG7hu5lp", // Bà nội
-      "w5RuZyBiw6AgbuG7mWk=", // Ông bà nội
-      "Q2jDuiB0csaw4budbmcgJiBjw7QgdHJpbmg=", // Chú trường & cô trinh
-      "Q8O0IHPGsMahbmc=", // Cô sương
-      "Q2jDuiBrZW4=", // Chú ken
-      "R8SRIGLDoWMgc8ahbg==", // Gđ bác sơn
-      "R8SRIGNow7ogbmjDom4=", // Gđ chú nhân
-      "R8SRIGLDoWMgaOG6o2k=", // Gđ bác hải
-      "R8SRIGLDoWMgcXVhbmc=", // Gđ bác quang
+      "w5RuZyBiw6AgbuG7mWk", // Ông bà nội
+      "Q2jDuiB0csaw4budbmcgJiBjw7QgdHJpbmg", // Chú trường & cô trinh
+      "Q8O0IHPGsMahbmc", // Cô sương
+      "Q2jDuiBrZW4", // Chú ken
+      "R8SRIGLDoWMgc8ahbg", // Gđ bác sơn
+      "R8SRIGNow7ogbmjDom4", // Gđ chú nhân
+      "R8SRIGLDoWMgaOG6o2k", // Gđ bác hải
+      "R8SRIGLDoWMgcXVhbmc", // Gđ bác quang
       "R8SRIGLDoWMgdGh14bu1", // Gđ bác thuỵ
       "R8SRIMO0bmcga2hv4bq7", // Gđ ông khoẻ
       "Q8O0IGFu" // Cô an
     ];
 
+    // --- Khi tải trang ---
     document.addEventListener("DOMContentLoaded", () => {
       const params = new URLSearchParams(window.location.search);
       const khachmoi = params.get("khachmoi");
@@ -6235,6 +6239,7 @@
       tenElement.textContent = decoded ? decoded.split("|")[0] : defaultName;
     });
   </script>
+
 </body>
 <savior-host style="
       all: unset;
